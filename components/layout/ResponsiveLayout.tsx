@@ -1,12 +1,11 @@
-
 import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { OWNER_NAVIGATION_ITEMS } from '../../constants';
 import LogoutButton from '../ui/LogoutButton';
 
 const ResponsiveLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation();
+  const location = ReactRouterDOM.useLocation();
   const currentPage = OWNER_NAVIGATION_ITEMS.find(item => location.pathname.startsWith(item.path));
   const pageTitle = currentPage ? currentPage.label : 'Dashboard';
 
@@ -40,7 +39,7 @@ const ResponsiveLayout: React.FC<{ children: React.ReactNode }> = ({ children })
       </div>
       <nav className="flex-grow space-y-1">
         {OWNER_NAVIGATION_ITEMS.map((item) => (
-          <NavLink
+          <ReactRouterDOM.NavLink
             key={item.path}
             to={item.path}
             onClick={() => setSidebarOpen(false)}
@@ -54,7 +53,7 @@ const ResponsiveLayout: React.FC<{ children: React.ReactNode }> = ({ children })
           >
             <span className="mr-4 text-2xl">{item.icon}</span>
             <span className="font-semibold">{item.label}</span>
-          </NavLink>
+          </ReactRouterDOM.NavLink>
         ))}
       </nav>
       <div className="mt-auto">

@@ -1,11 +1,10 @@
-
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const LogoutButton: React.FC = () => {
     const auth = useAuth();
-    const navigate = useNavigate();
+    const navigate = ReactRouterDOM.useNavigate();
 
     const handleLogout = () => {
         auth.logout();

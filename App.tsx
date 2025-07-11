@@ -1,7 +1,5 @@
-
-
 import React, { useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate, useLocation, Outlet } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { useTheme, ThemeProvider } from './hooks/useTheme';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 
@@ -9,7 +7,7 @@ import ResponsiveLayout from './components/layout/ResponsiveLayout';
 import { WorkerLayout } from './components/layout/WorkerLayout';
 import WorkerDashboard from './pages/Workerdashboard';
 
-import Ownersdashboard from './pages/Ownersdashboard';
+import Ownersdashboard from './components/ui/Ownersdashboard';
 import AnalysisPage from './pages/AnalysisPage';
 import AIAssistantPage from './pages/AIAssistantPage';
 import StockManagementPage from './pages/StockManagementPage';
@@ -25,7 +23,7 @@ import SalesPage from './pages/SalesPage';
 // This component ensures a user is authenticated before rendering the child routes.
 const AuthLayout: React.FC = () => {
     const { user, loading } = useAuth();
-    const location = useLocation();
+    const location = ReactRouterDOM.useLocation();
 
     if (loading) {
         return (
@@ -36,10 +34,10 @@ const AuthLayout: React.FC = () => {
     }
 
     if (!user) {
-        return <Navigate to="/login" state={{ from: location }} replace />;
+        return <ReactRouterDOM.Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    return <Outlet />; // Renders nested routes (e.g., owner or worker routes with their layouts)
+    return <ReactRouterDOM.Outlet />; // Renders nested routes (e.g., owner or worker routes with their layouts)
 };
 
 
@@ -54,13 +52,13 @@ const RoleRedirect: React.FC = () => {
     }
 
     if (user?.role === 'owner') {
-        return <Navigate to="/owner/dashboard" replace />;
+        return <ReactRouterDOM.Navigate to="/owner/dashboard" replace />;
     }
     if (user?.role === 'worker') {
-        return <Navigate to="/worker/dashboard" replace />;
+        return <ReactRouterDOM.Navigate to="/worker/dashboard" replace />;
     }
     // Fallback to login if role is not defined or user is null
-    return <Navigate to="/login" replace />;
+    return <ReactRouterDOM.Navigate to="/login" replace />;
 }
 
 
@@ -85,49 +83,49 @@ const AppContent: React.FC = () => {
   }, [theme]);
 
   return (
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
+      <ReactRouterDOM.Routes>
+        <ReactRouterDOM.Route path="/login" element={<LoginPage />} />
         
         {/* Protected routes are nested under AuthLayout */}
-        <Route element={<AuthLayout />}>
+        <ReactRouterDOM.Route element={<AuthLayout />}>
             {/* Owner Routes are nested under their own layout */}
-            <Route path="/owner" element={<ResponsiveLayout><Outlet /></ResponsiveLayout>}>
-                <Route path="dashboard" element={<Ownersdashboard />} />
-                <Route path="analysis" element={<AnalysisPage />} />
-                <Route path="ai-assistant" element={<AIAssistantPage />} />
-                <Route path="sales" element={<StockManagementPage />} />
-                <Route path="products" element={<ProductsPage />} />
-                <Route path="expenses" element={<ExpensesPage />} />
-                <Route path="transactions" element={<TransactionsPage />} />
-                <Route path="notes" element={<NotesPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-                <Route index element={<Navigate to="/owner/dashboard" replace />} />
-            </Route>
+            <ReactRouterDOM.Route path="/owner" element={<ResponsiveLayout><ReactRouterDOM.Outlet /></ResponsiveLayout>}>
+                <ReactRouterDOM.Route path="dashboard" element={<Ownersdashboard />} />
+                <ReactRouterDOM.Route path="analysis" element={<AnalysisPage />} />
+                <ReactRouterDOM.Route path="ai-assistant" element={<AIAssistantPage />} />
+                <ReactRouterDOM.Route path="sales" element={<StockManagementPage />} />
+                <ReactRouterDOM.Route path="products" element={<ProductsPage />} />
+                <ReactRouterDOM.Route path="expenses" element={<ExpensesPage />} />
+                <ReactRouterDOM.Route path="transactions" element={<TransactionsPage />} />
+                <ReactRouterDOM.Route path="notes" element={<NotesPage />} />
+                <ReactRouterDOM.Route path="settings" element={<SettingsPage />} />
+                <ReactRouterDOM.Route index element={<ReactRouterDOM.Navigate to="/owner/dashboard" replace />} />
+            </ReactRouterDOM.Route>
 
             {/* Worker Routes are nested under their own layout */}
-            <Route path="/worker" element={<WorkerLayout><Outlet /></WorkerLayout>}>
-                <Route path="dashboard" element={<WorkerDashboard />} />
-                <Route path="sales" element={<SalesPage />} />
-                <Route path="expenses" element={<ExpensesPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-                <Route index element={<Navigate to="/worker/dashboard" replace />} />
-            </Route>
-        </Route>
+            <ReactRouterDOM.Route path="/worker" element={<WorkerLayout><ReactRouterDOM.Outlet /></WorkerLayout>}>
+                <ReactRouterDOM.Route path="dashboard" element={<WorkerDashboard />} />
+                <ReactRouterDOM.Route path="sales" element={<SalesPage />} />
+                <ReactRouterDOM.Route path="expenses" element={<ExpensesPage />} />
+                <ReactRouterDOM.Route path="settings" element={<SettingsPage />} />
+                <ReactRouterDOM.Route index element={<ReactRouterDOM.Navigate to="/worker/dashboard" replace />} />
+            </ReactRouterDOM.Route>
+        </ReactRouterDOM.Route>
 
-        <Route path="/" element={<RoleRedirect />} />
-      </Routes>
+        <ReactRouterDOM.Route path="/" element={<RoleRedirect />} />
+      </ReactRouterDOM.Routes>
   );
 }
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
+    <ReactRouterDOM.HashRouter>
       <ThemeProvider>
         <AuthProvider>
           <AppContent />
         </AuthProvider>
       </ThemeProvider>
-    </HashRouter>
+    </ReactRouterDOM.HashRouter>
   );
 };
 

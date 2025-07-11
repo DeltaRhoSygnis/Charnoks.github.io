@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Spinner from '../components/ui/Spinner';
 
@@ -38,8 +37,8 @@ const LogoIcon = () => (
 );
 
 const LoginPage: React.FC = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
+    const navigate = ReactRouterDOM.useNavigate();
+    const location = ReactRouterDOM.useLocation();
     const auth = useAuth();
     
     const [email, setEmail] = useState('');

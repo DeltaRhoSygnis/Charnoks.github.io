@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import * as ReactRouterDOM from 'react-router-dom';
 import KPICard from '../components/ui/KPI_Card';
 
 const WorkerDashboard: React.FC = () => {
@@ -16,17 +15,17 @@ const WorkerDashboard: React.FC = () => {
             </header>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <KPICard title="Your Sales Today" value={salesToday.toString()} icon="🛒" />
-                <KPICard title="Your Revenue Today" value={`$${revenueToday.toFixed(2)}`} icon="💰" />
+                <KPICard title="Your Sales Today" value={salesToday.toString()} icon="ðŸ›’" />
+                <KPICard title="Your Revenue Today" value={`$${revenueToday.toFixed(2)}`} icon="ðŸ’°" />
             </div>
 
             <div className="animate-slide-in-bottom">
-                 <Link 
+                 <ReactRouterDOM.Link 
                     to="/worker/sales" 
                     className="block w-full text-center p-6 bg-primary rounded-2xl text-text-on-primary font-bold text-2xl transition-transform duration-300 hover:scale-105 shadow-lg"
                  >
                     + Record a New Sale
-                </Link>
+                </ReactRouterDOM.Link>
             </div>
         </div>
     );
